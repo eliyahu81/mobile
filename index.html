@@ -7,7 +7,7 @@
     <style>
         body { background-color: #2c2420; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; overflow: hidden; }
         .main { width: 95vw; height: 85vh; background: #e3dac9; border: 15px ridge #4a3728; display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 10px; gap: 10px; box-sizing: border-box; }
-        .panel { background: rgba(255, 255, 255, 0.6); border: 2px solid #8b4513; padding: 10px; font-weight: bold; font-size: 0.8rem; border-radius: 10px; }
+        .panel { background: rgba(255, 255, 255, 0.6); border: 2px solid #8b4513; padding: 10px; font-weight: bold; font-size: 0.9rem; border-radius: 10px; text-align: right; }
         .center { background: white; border: 3px solid #b8860b; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         #clock { font-size: 2.5rem; font-weight: bold; }
     </style>
@@ -32,7 +32,6 @@
                 const p = d.items.find(i => i.category === 'parashat');
                 document.getElementById('parasha').innerText = p ? p.hebrew : "";
                 
-                // Автоматическое заполнение колонок
                 const left = document.getElementById('left-col');
                 const right = document.getElementById('right-col');
                 d.items.forEach(i => {
