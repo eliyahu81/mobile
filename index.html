@@ -2,42 +2,39 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>תורת הרי"ף</title>
     <style>
-        body { background-color: #2c2420; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: 'David Libre', serif; overflow: hidden; }
-        .header { color: #d4af37; font-size: 2.5rem; font-weight: 900; margin-bottom: 5px; }
-        .main-frame { width: 95vw; height: 80vh; border: 15px solid #4a3728; border-style: ridge; background: #e3dac9; display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 10px; box-sizing: border-box; gap: 10px; }
-        .panel { background: rgba(255, 255, 255, 0.4); padding: 5px; font-size: 0.7rem; font-weight: bold; overflow-y: auto; }
-        .center { background: #fff; border: 3px solid #b8860b; border-radius: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5px; }
-        #clock { font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; }
-        .parasha-text { font-size: 1.2rem; font-weight: 900; color: #4a3728; }
-        .row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+        body { background-color: #2c2420; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: sans-serif; }
+        .header { color: #d4af37; font-size: 2rem; font-weight: bold; margin-bottom: 10px; }
+        .frame { width: 95vw; height: 85vh; border: 15px solid #4a3728; border-style: ridge; background: #e3dac9; display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 10px; box-sizing: border-box; gap: 10px; }
+        .panel { background: rgba(255, 255, 255, 0.4); padding: 5px; font-size: 0.8rem; overflow-y: auto; }
+        .center { background: #fff; border: 3px solid #b8860b; border-radius: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px; }
     </style>
 </head>
 <body>
 
 <div class="header">תורת הרי"ף</div>
 
-<div class="main-frame">
+<div class="frame">
     <div class="panel">
-        <div style="text-align:center; border-bottom:1px solid">זמני תפילות</div>
-        <div class="row"><span>שחרית</span><span>06:00/08:00</span></div>
-        <div class="row"><span>מנחה</span><span>17:00</span></div>
-        <div class="row"><span>ערבית</span><span>20:15</span></div>
+        <div style="text-align:center; font-weight:bold;">זמני תפילות</div>
+        <div>שחרית: 06:00/08:00</div>
+        <div>מנחה: 17:00</div>
+        <div>ערבית: 20:15</div>
     </div>
     
     <div class="center">
-        <div id="clock">00:00:00</div>
-        <div class="parasha-text">פרשת מטות-מסעי</div>
+        <div id="clock" style="font-size: 2rem; font-weight: bold;">00:00:00</div>
+        <div style="font-size: 1.2rem; font-weight: 900;">פרשת מטות-מסעי</div>
         <div style="font-size: 0.9rem; margin-top: 10px;">כניסת השבת: 19:28<br>צאת השבת: 20:31</div>
     </div>
 
     <div class="panel">
-        <div style="text-align:center; border-bottom:1px solid">זמני היום</div>
-        <div class="row"><span>נץ החמה</span><span>05:42</span></div>
-        <div class="row"><span>שקיעה</span><span>19:51</span></div>
-        <div class="row"><span>צאת הכוכבים</span><span>20:13</span></div>
+        <div style="text-align:center; font-weight:bold;">זמני היום</div>
+        <div>נץ החמה: 05:42</div>
+        <div>שקיעה: 19:51</div>
+        <div>צאת הכוכבים: 20:13</div>
     </div>
 </div>
 
