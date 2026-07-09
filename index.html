@@ -7,20 +7,20 @@
     <style>
         body { background-color: #2c2420; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; overflow: hidden; }
         .main { width: 95vw; height: 85vh; background: #e3dac9; border: 15px ridge #4a3728; display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 10px; gap: 10px; box-sizing: border-box; }
-        .panel { background: rgba(255, 255, 255, 0.7); border: 2px solid #8b4513; padding: 8px; font-weight: bold; font-size: 0.85rem; border-radius: 10px; text-align: right; direction: rtl; display: flex; flex-direction: column; gap: 5px; }
+        .panel { background: rgba(255, 255, 255, 0.7); border: 2px solid #8b4513; padding: 8px; font-weight: bold; font-size: 0.8rem; border-radius: 10px; text-align: right; direction: rtl; }
         .center { background: white; border: 3px solid #b8860b; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #clock { font-size: 2.2rem; font-weight: bold; }
-        hr { width: 100%; border: 0; border-top: 1px solid #8b4513; margin: 5px 0; }
+        #clock { font-size: 2rem; font-weight: bold; }
+        .data-item { margin-top: 5px; font-size: 0.75rem; }
     </style>
 </head>
 <body>
     <div class="main">
-        <div class="panel" id="left-col"><div>זמני תפילות</div><hr></div>
+        <div class="panel" id="left-col">זמני תפילות<hr></div>
         <div class="center">
             <div id="clock">00:00:00</div>
-            <div id="parasha" style="font-weight:bold; margin-top:10px;"></div>
+            <div id="parasha" style="font-weight:bold; margin-top:10px; font-size: 0.9rem;"></div>
         </div>
-        <div class="panel" id="right-col"><div>זמני היום</div><hr></div>
+        <div class="panel" id="right-col">זמני היום<hr></div>
     </div>
     <script>
         setInterval(() => {
@@ -37,8 +37,9 @@
                 const right = document.getElementById('right-col');
                 
                 d.items.forEach(i => {
-                    if (i.category === 'candles') left.innerHTML += `<div>הדלקת נרות: ${i.title.split(' ')[2]}</div>`;
-                    if (i.category === 'havdalah') right.innerHTML += `<div>הבדלה: ${i.title.split(' ')[2]}</div>`;
+                    const time = i.date.split('T')[1].substring(0, 5);
+                    if (i.category === 'candles') left.innerHTML += `<div class="data-item">הדלקת נרות: ${time}</div>`;
+                    if (i.category === 'havdalah') right.innerHTML += `<div class="data-item">הבדלה: ${time}</div>`;
                 });
             });
     </script>
