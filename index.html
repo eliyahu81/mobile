@@ -6,17 +6,15 @@
     <style>
         body { background-color: #2c2420; margin: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; font-family: 'David Libre', serif; overflow: hidden; }
         .header-top { margin-top: 10px; font-size: 3rem; font-weight: 900; color: #d4af37; font-family: 'Frank Ruhl Libre', serif; }
-        .frame { width: 95vw; height: 75vh; border: 20px solid #4a3728; border-style: ridge; background: #e3dac9; display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; padding: 15px; box-sizing: border-box; }
-        
+        .frame { width: 95vw; height: 78vh; border: 20px solid #4a3728; border-style: ridge; background: #e3dac9; display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; padding: 15px; box-sizing: border-box; }
         .side-panel { background: rgba(255, 255, 255, 0.3); border: 2px solid #8b7355; border-radius: 10px; padding: 8px; }
-        .title { font-size: 1rem; color: #4a3728; border-bottom: 2px solid #4a3728; text-align: center; margin-bottom: 5px; font-weight: bold; }
-        .row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 1px 0; font-weight: bold; }
-        
-        .center-piece { background: #fff; border: 4px solid #b8860b; border-radius: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; }
+        .title { font-size: 0.9rem; color: #4a3728; border-bottom: 2px solid #4a3728; text-align: center; margin-bottom: 5px; font-weight: bold; }
+        .row { display: flex; justify-content: space-between; font-size: 0.75rem; margin: 1px 0; font-weight: bold; }
+        .center-piece { background: #fff; border: 4px solid #b8860b; border-radius: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; }
         #clock { font-size: 3rem; font-weight: bold; color: #000; margin: 5px 0; }
         #parasha { font-size: 1.5rem; font-weight: 900; color: #4a3728; }
         .info-text { font-size: 1rem; color: #444; font-weight: bold; margin-top: 5px; }
-        .shabbat-box { margin-top: 10px; font-size: 1.1rem; color: #8b4513; font-weight: bold; }
+        .shabbat-box { margin-top: 10px; font-size: 1rem; color: #8b4513; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -24,38 +22,43 @@
 <div class="header-top">תורת הרי"ף</div>
 
 <div class="frame">
-    <!-- Зманей а-йом -->
-    <div class="side-panel">
-        <div class="title">זמני היום</div>
-        <div class="row"><span>נץ החמה</span><span>05:42</span></div>
-        <div class="row"><span>שקיעה</span><span>19:51</span></div>
-        <div class="row"><span>צאת הכוכבים</span><span>20:13</span></div>
-        <div class="row"><span>צאת ר"ת</span><span>21:04</span></div>
-    </div>
-
-    <!-- Центр -->
-    <div class="center-piece">
-        <div id="clock">00:00:00</div>
-        <div id="parasha">פרשת מטות-מסעי</div>
-        <div class="info-text">הפטרת השבת: ירמיה פרק ב'</div>
-        <div class="shabbat-box">
-            כניסת השבת: 19:30 | צאת השבת: 20:31
-        </div>
-    </div>
-
-    <!-- Левая панель: Зманей тфилот -->
     <div class="side-panel">
         <div class="title">זמני תפילות חול</div>
         <div class="row"><span>שחרית</span><span>06:00</span></div>
         <div class="row"><span>מנחה</span><span>17:00</span></div>
         <div class="row"><span>ערבית</span><span>20:15</span></div>
-
-        <div style="margin-top: 15px;"></div>
-
-        <div class="title">זמני תפילות שבת</div>
+        <div style="margin-top: 15px;" class="title">זמני תפילות שבת</div>
         <div class="row"><span>שחרית</span><span>08:00</span></div>
         <div class="row"><span>מנחה</span><span>17:00</span></div>
         <div class="row"><span>ערבית</span><span>20:15</span></div>
+    </div>
+
+    <div class="center-piece">
+        <div style="font-size: 0.8rem;">יום חמישי, כ"ד בתמוז ה'תשפ"ו</div>
+        <div id="clock">00:00:00</div>
+        <div id="parasha">פרשת מטות-מסעי</div>
+        <div class="info-text">הפטרת השבת: ירמיה פרק ב' - שמעו דבר ה'</div>
+        <div style="color: blue; font-size: 0.9rem; margin: 5px;">מורيد הטל</div>
+        <div class="shabbat-box">
+            כניסת השבת: 19:30 | צאת השבת: 20:31<br>צאת שבת ר"ת: 21:03
+        </div>
+    </div>
+
+    <div class="side-panel">
+        <div class="title">זמני היום</div>
+        <div class="row"><span>עלות השחר (90)</span><span>03:53</span></div>
+        <div class="row"><span>עלות השחר (72)</span><span>04:31</span></div>
+        <div class="row"><span>טלית ותפילין</span><span>04:57</span></div>
+        <div class="row"><span>נץ החמה</span><span>05:42</span></div>
+        <div class="row"><span>סוף זמן ק"ש מג"א</span><span>08:38</span></div>
+        <div class="row"><span>סוף זמן ק"ש גר"א</span><span>09:14</span></div>
+        <div class="row"><span>סוף זמן תפילה</span><span>10:24</span></div>
+        <div class="row"><span>חצות</span><span>12:46</span></div>
+        <div class="row"><span>מנחה גדולה</span><span>13:21</span></div>
+        <div class="row"><span>מנחה קטנה</span><span>16:53</span></div>
+        <div class="row"><span>שקיעה</span><span>19:51</span></div>
+        <div class="row"><span>צאת הכוכבים</span><span>20:13</span></div>
+        <div class="row"><span>צאת הכוכבים ר"ת</span><span>21:04</span></div>
     </div>
 </div>
 
