@@ -3,34 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .column { width: 80%; text-align: center; }
-        h2 { color: #d4af37; border-bottom: 1px solid #d4af37; font-size: 1.2em; }
+        body { font-family: sans-serif; padding: 20px; direction: rtl; }
+        .zman-row { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding: 5px 0; }
     </style>
 </head>
 <body>
-
-<div class="column">
-    <h2>זמני היום</h2>
+    <h2>זמני היום ברחובות</h2>
     <div id="zmanim-list">טוען נתונים...</div>
-</div>
 
-<script>
-    // Читаем локальный файл data.json, который мы создали через Actions
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            const z = data.times;
-            const sunrise = new Date(z.sunrise).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'});
-            const sunset = new Date(z.sunset).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'});
-            
-            document.getElementById('zmanim-list').innerHTML = 
-                `זריחה: ${sunrise}<br>שקיעה: ${sunset}`;
-        })
-        .catch(err => {
-            document.getElementById('zmanim-list').innerText = "שגיאה בטעינת הנתונים";
-        });
-</script>
-
+    <script>
+        fetch('data.json')
+            .then(res => res.json())
+            .then(data => {
+                const times = data.times;
+                const labels = {
+                    alos90: "עלות השחר 90'", alos72: "עלות השחר 72'", 
+                    talisTefillin: "זמן טלית ותפילין", sunrise: "הנץ החמה",
+                    sofZmanShmaMGA: "סוף זמן ק''ש מג''א", sofZmanShmaGRA: "סוף זמן ק''ש גר''א",
+                    sofZmanTfilaMGA: "סוף זמן תפילה מג''א", sofZmanTfilaGRA: "סוף זמן תפילה גר''א",
+                    chatzos: "חצות היום", minchaGedola: "מנחה גדולה",
+                    minchaKetana: "מנחה קטנה", plagMincha: "פלג המנחה",
+                    sunset: "שקיעה", tzais: "צאת הכוכבים", tzaisRabbeinuTam: "צאת הכוכבים ר''ת"
+                };
+                
+                let html = '';
+                for (let key in times) {
+                    const time = new Date(times[key]).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'});
+                    html += `<div class="zman-row"><span>${labels[key]}</span><span>${time}</span></div>`;
+                }
+                document.getElementById('zmanim-list').innerHTML = html;
+            });
+    </script>
 </body>
 </html>
