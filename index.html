@@ -3,41 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { background-color: #2c2420; color: #f4e4bc; font-family: sans-serif; display: flex; justify-content: space-around; padding: 20px; }
-        .column { width: 30%; border: 1px solid #d4af37; padding: 10px; text-align: center; }
-        h2 { color: #d4af37; border-bottom: 1px solid #d4af37; font-size: 1.1em; }
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .column { width: 80%; text-align: center; }
+        h2 { color: #d4af37; border-bottom: 1px solid #d4af37; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
 <div class="column">
     <h2>זמני היום</h2>
-    <div id="zmanim-list">טוען...</div>
-</div>
-<div class="column">
-    <h2>שעה</h2>
-    <div id="clock"></div>
-</div>
-<div class="column">
-    <h2>פרשת שבוע</h2>
-    <div id="parasha">טוען...</div>
+    <div id="zmanim-list">טוען נתונים...</div>
 </div>
 
 <script>
-    // Вставь сюда URL, который ты получил от Google Apps Script
-    const myProxyUrl = 'ТВОЯ_ССЫЛКА_ОТ_GOOGLE_APPS_SCRIPT';
-
-    fetch(myProxyUrl)
-    .then(r => r.json())
-    .then(data => {
-        const z = data.times;
-        document.getElementById('zmanim-list').innerHTML = 
-            `נץ: ${new Date(z.sunrise).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}<br>` +
-            `שקיעה: ${new Date(z.sunset).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}`;
-    })
-    .catch(err => document.getElementById('zmanim-list').innerText = "שגיאה בטעינה");
-
-    setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString('he-IL'), 1000);
+    // Читаем локальный файл data.json, который мы создали через Actions
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const z = data.times;
+            const sunrise = new Date(z.sunrise).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'});
+            const sunset = new Date(z.sunset).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'});
+            
+            document.getElementById('zmanim-list').innerHTML = 
+                `זריחה: ${sunrise}<br>שקיעה: ${sunset}`;
+        })
+        .catch(err => {
+            document.getElementById('zmanim-list').innerText = "שגיאה בטעינת הנתונים";
+        });
 </script>
 
 </body>
