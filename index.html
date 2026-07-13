@@ -1,16 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <style>
-        body { background-color: #2c2420; color: #f4e4bc; font-family: sans-serif; display: flex; justify-content: space-between; padding: 20px; }
+        body { background-color: #2c2420; color: #f4e4bc; font-family: sans-serif; display: flex; justify-content: space-around; padding: 20px; }
         .column { width: 30%; border: 1px solid #d4af37; padding: 10px; text-align: center; }
-        h2 { color: #d4af37; border-bottom: 1px solid #d4af37; }
+        h2 { color: #d4af37; border-bottom: 1px solid #d4af37; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
-<div class="column" id="zmanim-col">
+<div class="column">
     <h2>זמני היום</h2>
     <div id="zmanim-list">טוען נתונים...</div>
 </div>
@@ -26,33 +27,30 @@
 </div>
 
 <script>
-    // פונקציה למשיכת זמנים בשיטת JSONP
-    function displayZmanim(data) {
+    // 1. משיכת זמנים
+    fetch('https://www.hebcal.com/zmanim?cfg=json&city=israel-tel-aviv&maj=on')
+    .then(r => r.json())
+    .then(data => {
         const z = data.times;
-        const html = `
-            <div>נץ: ${new Date(z.sunrise).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}</div>
-            <div>שקיעה: ${new Date(z.sunset).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}</div>
-            <div>צאת: ${new Date(z.tzait).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}</div>
-        `;
-        document.getElementById('zmanim-list').innerHTML = html;
-    }
+        document.getElementById('zmanim-list').innerHTML = 
+            `נץ: ${new Date(z.sunrise).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}<br>` +
+            `שקיעה: ${new Date(z.sunset).toLocaleTimeString('he-IL', {hour:'2-digit', minute:'2-digit'})}`;
+    })
+    .catch(err => {
+        document.getElementById('zmanim-list').innerText = "שגיאת שרת: " + err.message;
+    });
 
-    // יצירת תג Script למשיכת הנתונים
-    const script = document.createElement('script');
-    script.src = 'https://www.hebcal.com/zmanim?cfg=json&city=israel-tel-aviv&callback=displayZmanim';
-    document.body.appendChild(script);
-
-    // שעון
+    // 2. שעון
     setInterval(() => document.getElementById('clock').innerText = new Date().toLocaleTimeString('he-IL'), 1000);
 
-    // פרשת שבוע פשוטה
+    // 3. פרשת שבוע
     fetch('https://www.hebcal.com/hebcal?v=1&cfg=json&maj=on&year=now&month=x')
-        .then(r => r.json())
-        .then(data => {
-            const p = data.items.find(i => i.category === 'parashat');
-            document.getElementById('parasha').innerText = p ? p.title : 'אין פרשה';
-        })
-        .catch(() => document.getElementById('parasha').innerText = 'שגיאת רשת');
+    .then(r => r.json())
+    .then(data => {
+        const p = data.items.find(i => i.category === 'parashat');
+        document.getElementById('parasha').innerText = p ? p.title : 'אין פרשה';
+    })
+    .catch(() => document.getElementById('parasha').innerText = "שגיאה");
 </script>
 
 </body>
