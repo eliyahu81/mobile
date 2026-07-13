@@ -10,14 +10,33 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install kosher-zmanim
       - name: Generate Zmanim
         run: |
           node -e '
-            const date = new Date();
+            const { GeoLocation, Zmanim } = require("kosher-zmanim");
+            const location = new GeoLocation("Rehovot", 31.89, 34.81, 0, "Asia/Jerusalem");
+            const zmanim = new Zmanim(location, new Date());
             const data = {
               times: {
-                sunrise: new Date(date.setHours(5, 30)).toISOString(),
-                sunset: new Date(date.setHours(19, 45)).toISOString()
+                alos90: zmanim.getAlos90().toISOString(),
+                alos72: zmanim.getAlos72().toISOString(),
+                talisTefillin: zmanim.getTalisTefillin().toISOString(),
+                sunrise: zmanim.getSunrise().toISOString(),
+                sofZmanShmaMGA: zmanim.getSofZmanShmaMGA().toISOString(),
+                sofZmanShmaGRA: zmanim.getSofZmanShmaGRA().toISOString(),
+                sofZmanTfilaMGA: zmanim.getSofZmanTfilaMGA().toISOString(),
+                sofZmanTfilaGRA: zmanim.getSofZmanTfilaGRA().toISOString(),
+                chatzos: zmanim.getChatzos().toISOString(),
+                minchaGedola: zmanim.getMinchaGedola().toISOString(),
+                minchaKetana: zmanim.getMinchaKetana().toISOString(),
+                plagMincha: zmanim.getPlagMincha().toISOString(),
+                sunset: zmanim.getSunset().toISOString(),
+                tzais: zmanim.getTzais().toISOString(),
+                tzaisRabbeinuTam: zmanim.getTzaisRabbeinuTam().toISOString()
               }
             };
             require("fs").writeFileSync("data.json", JSON.stringify(data, null, 2));
@@ -27,5 +46,5 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           git add data.json
-          git commit -m "Update Zmanim data"
+          git commit -m "Update full Zmanim"
           git push
