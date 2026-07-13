@@ -2,46 +2,67 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>תורת הרי"ף</title>
+    <title>לוח זמני בית הכנסת</title>
     <style>
-        body { background-color: #2c2420; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; overflow: hidden; }
-        .main { width: 95vw; height: 85vh; background: #e3dac9; border: 15px ridge #4a3728; display: grid; grid-template-columns: 1fr 2fr 1fr; padding: 10px; gap: 10px; box-sizing: border-box; }
-        .panel { background: rgba(255, 255, 255, 0.7); border: 2px solid #8b4513; padding: 8px; font-weight: bold; font-size: 0.8rem; border-radius: 10px; text-align: right; direction: rtl; }
-        .center { background: white; border: 3px solid #b8860b; border-radius: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        #clock { font-size: 2rem; font-weight: bold; }
-        .data-item { margin-top: 5px; font-size: 0.75rem; }
+        body { font-family: sans-serif; background-color: #2c2420; color: #f4e4bc; margin: 0; padding: 10px; }
+        .container { display: flex; justify-content: space-between; gap: 10px; height: 90vh; }
+        .column { width: 30%; border: 2px solid #d4af37; padding: 15px; border-radius: 8px; background: #3e352e; overflow-y: auto; }
+        .center-column { width: 35%; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+        h2 { border-bottom: 2px solid #d4af37; padding-bottom: 10px; color: #d4af37; }
+        .time-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #5a4f45; }
+        #clock { font-size: 2em; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="main">
-        <div class="panel" id="left-col">זמני תפילות<hr></div>
-        <div class="center">
-            <div id="clock">00:00:00</div>
-            <div id="parasha" style="font-weight:bold; margin-top:10px; font-size: 0.9rem;"></div>
-        </div>
-        <div class="panel" id="right-col">זמני היום<hr></div>
+
+<div class="container">
+    <div class="column" id="zmanim-left">
+        <h2>זמני היום</h2>
+        <div id="zmanim-list">טוען נתונים...</div>
     </div>
-    <script>
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('he-IL', { hour12: false });
-        }, 1000);
-        
-        fetch('https://www.hebcal.com/shabbat?cfg=json&geonameid=293842&m=50')
-            .then(r => r.json())
-            .then(d => {
-                const p = d.items.find(i => i.category === 'parashat');
-                if (p) document.getElementById('parasha').innerText = p.hebrew;
-                
-                const left = document.getElementById('left-col');
-                const right = document.getElementById('right-col');
-                
-                d.items.forEach(i => {
-                    const time = i.date.split('T')[1].substring(0, 5);
-                    if (i.category === 'candles') left.innerHTML += `<div class="data-item">הדלקת נרות: ${time}</div>`;
-                    if (i.category === 'havdalah') right.innerHTML += `<div class="data-item">הבדלה: ${time}</div>`;
-                });
+    <div class="column center-column">
+        <div id="clock">טוען זמן...</div>
+        <div id="parasha">טוען פרשת שבוע...</div>
+    </div>
+    <div class="column">
+        <h2>זמני תפילה</h2>
+        <div>יתפרסם בהמשך...</div>
+    </div>
+</div>
+
+<script>
+    // שעון ופרשה
+    function updateClock() {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('he-IL');
+    }
+    setInterval(updateClock, 1000);
+
+    // משיכת זמנים
+    const apiUrl = 'https://www.hebcal.com/zmanim?cfg=json&city=israel-tel-aviv&maj=on';
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const z = data.times;
+            const timesList = [
+                {n: "נץ החמה", v: z.sunrise},
+                {n: "שקיעה", v: z.sunset},
+                {n: "צאת הכוכבים", v: z.tzait}
+            ];
+            let html = '';
+            timesList.forEach(t => {
+                let timeStr = new Date(t.v).toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'});
+                html += `<div class="time-row"><span>${t.n}</span><span>${timeStr}</span></div>`;
             });
-    </script>
+            document.getElementById('zmanim-list').innerHTML = html;
+        });
+
+    // פרשת שבוע
+    fetch('https://www.hebcal.com/hebcal?v=1&cfg=json&maj=on&year=now&month=x')
+        .then(response => response.json())
+        .then(data => {
+            const parasha = data.items.find(i => i.category === 'parashat');
+            document.getElementById('parasha').innerText = parasha ? parasha.title : 'אין פרשה השבוע';
+        });
+</script>
 </body>
 </html>
